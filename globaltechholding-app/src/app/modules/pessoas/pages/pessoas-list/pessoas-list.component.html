@@ -1,0 +1,74 @@
+<div class="container">
+
+    <div class="header-actions">
+        <h2>Pessoas Cadastradas</h2>
+        <button mat-flat-button color="primary" (click)="navigate('/pessoas/cadastrar')">
+            <mat-icon>add</mat-icon>
+            Novo Cadastro
+        </button>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>Id</th>
+            <td mat-cell *matCellDef="let pessoa">{{ pessoa.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef>Nome</th>
+            <td mat-cell *matCellDef="let pessoa">{{ pessoa.nome }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="cpf">
+            <th mat-header-cell *matHeaderCellDef>CPF</th>
+            <td mat-cell *matCellDef="let pessoa">{{ pessoa.cpf | cpfFormat }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="dataNascimento">
+            <th mat-header-cell *matHeaderCellDef>Data Nascimento</th>
+            <td mat-cell *matCellDef="let pessoa">{{ pessoa.dataNascimento | dateFormat}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="sexo">
+            <th mat-header-cell *matHeaderCellDef>Sexo</th>
+            <td mat-cell *matCellDef="let pessoa">{{ pessoa.sexo === 'M' ? 'Masculino' : 'Feminino' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="altura">
+            <th mat-header-cell *matHeaderCellDef>Altura</th>
+            <td mat-cell *matCellDef="let pessoa">{{ pessoa.altura }} m</td>
+        </ng-container>
+
+        <ng-container matColumnDef="peso">
+            <th mat-header-cell *matHeaderCellDef>Peso</th>
+            <td mat-cell *matCellDef="let pessoa">{{ pessoa.peso }} kg</td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>Ações</th>
+            <td mat-cell *matCellDef="let pessoa" class="actions">
+
+                <button mat-icon-button color="secondary" (click)="navigate('/pessoas/visualizar/' + pessoa.id)">
+                    <mat-icon>visibility</mat-icon>
+                </button>
+
+                <button mat-icon-button color="primary" (click)="navigate('/pessoas/editar/' + pessoa.id)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+
+                <button mat-icon-button color="warn" (click)="deletePessoa(pessoa.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+    <mat-paginator [length]="totalItems" [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="[10, 25, 35]">
+    </mat-paginator>
+</div>
